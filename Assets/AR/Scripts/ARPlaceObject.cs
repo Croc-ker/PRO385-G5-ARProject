@@ -9,6 +9,7 @@ public class PlaceObjects : MonoBehaviour
 {
     [SerializeField] private ARRaycastManager raycastManager;
     [SerializeField] private GameObject[] prefabs;
+    [SerializeField] private Transform playerTransform;
     bool isPlacing = false;
     void Start()
     {
@@ -53,6 +54,7 @@ public class PlaceObjects : MonoBehaviour
             // Get the position and rotation of the first hit
             Vector3 hitPosePosition = rayHits[0].pose.position;
             Quaternion hitPoseRotation = rayHits[0].pose.rotation;
+            hitPoseRotation = Quaternion.Euler(hitPosePosition.x, Quaternion.LookRotation(hitPosePosition - playerTransform.position).y, hitPoseRotation.z + 90);
             // Instantiate the prefab at the hit location
             Instantiate(prefabs[Random.Range(0,prefabs.Length)], hitPosePosition, hitPoseRotation);
         }
