@@ -5,8 +5,9 @@ public class ARPickupInteraction : MonoBehaviour
 {
     public GameObject pickupObject;      // The AR object to pick up
     public GameObject carObject;         // The car destination
+    public GameObject[] beers;         // The beers you have to find and drink
     public Button pickUpButton;
-    public Button dropOffButton;
+    public Button enterCarButton;
 
     private bool hasItem = false;
     private float interactionDistance = 1.5f; // meters
@@ -14,13 +15,13 @@ public class ARPickupInteraction : MonoBehaviour
 
     void Start()
     {
-        cameraTransform = Camera.main.transform;
+      cameraTransform = Camera.main.transform;
 
-        pickUpButton.gameObject.SetActive(false);
-        dropOffButton.gameObject.SetActive(false);
-
-        pickUpButton.onClick.AddListener(PickUpItem);
-        dropOffButton.onClick.AddListener(DropOffItem);
+      pickUpButton.gameObject.SetActive(false);
+      enterCarButton.gameObject.SetActive(false);
+      
+      pickUpButton.onClick.AddListener(PickUpItem);
+      enterCarButton.onClick.AddListener(enterCar);
     }
 
     void Update()
@@ -39,11 +40,11 @@ public class ARPickupInteraction : MonoBehaviour
 
         if (hasItem && distToCar <= interactionDistance)
         {
-            dropOffButton.gameObject.SetActive(true);
+            enterCarButton.gameObject.SetActive(true);
         }
         else
         {
-            dropOffButton.gameObject.SetActive(false);
+            enterCarButton.gameObject.SetActive(false);
         }
     }
 
@@ -54,11 +55,11 @@ public class ARPickupInteraction : MonoBehaviour
         pickUpButton.gameObject.SetActive(false);
     }
 
-    void DropOffItem()
+    void enterCar()
     {
         hasItem = false;
         // You could trigger an animation, sound, or spawn the object inside the car
         Debug.Log("Item delivered!");
-        dropOffButton.gameObject.SetActive(false);
+        enterCarButton.gameObject.SetActive(false);
     }
 }
