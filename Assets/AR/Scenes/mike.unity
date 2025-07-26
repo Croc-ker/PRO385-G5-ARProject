@@ -775,18 +775,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145380978}
   m_CullTransparentMesh: 1
+--- !u!1 &150618455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+    type: 3}
+  m_PrefabInstance: {fileID: 331264285}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &151853166 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2512387470528047737, guid: 48cb3fb68c91eb94999fd99957eb0cae,
     type: 3}
   m_PrefabInstance: {fileID: 331264285}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 150618455}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &151853171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150618455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347d57e90a6730343a28cb9931a3b42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ARPickupInteraction
+  pickupObject: {fileID: 0}
+  carObject: {fileID: 0}
+  interactButton: {fileID: 297630359}
+  drinkButton: {fileID: 423116886}
+  spawnedBeers: []
 --- !u!1 &232260061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,7 +1825,11 @@ PrefabInstance:
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 436358034}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 151853171}
   m_SourcePrefab: {fileID: 100100000, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
 --- !u!114 &331264286 stripped
 MonoBehaviour:
@@ -2573,11 +2600,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c8182a63e737c46b21ff1a65949b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ARObjectSpawner
-  beerPrefab: {fileID: 0}
-  keyPrefab: {fileID: 0}
-  truckPrefab: {fileID: 0}
-  planeManager: {fileID: 0}
+  beerPrefab: {fileID: 4109703688760574301, guid: fe0c1072d264c6e47a39d1d66045513f,
+    type: 3}
+  keyPrefab: {fileID: 6481611125919817763, guid: a7aaddd46991d2940b5783230e859adb,
+    type: 3}
+  truckPrefab: {fileID: 8645538847777891380, guid: 0e36b3036c0aca24cb34588b0a106993,
+    type: 3}
+  interactionScript: {fileID: 151853171}
+  planeManager: {fileID: 151853166}
   heightOffset: 0.05
+  beersCollected: 0
 --- !u!4 &573582071
 Transform:
   m_ObjectHideFlags: 0

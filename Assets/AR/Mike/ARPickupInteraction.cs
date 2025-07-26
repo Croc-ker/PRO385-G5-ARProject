@@ -1,65 +1,94 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class ARPickupInteraction : MonoBehaviour
 {
-    public GameObject pickupObject;      // The AR object to pick up
-    public GameObject carObject;         // The car destination
-    public GameObject[] beers;         // The beers you have to find and drink
-    public Button pickUpButton;
-    public Button enterCarButton;
+   [HideInInspector] public GameObject pickupObject;      // The key
+   [HideInInspector] public GameObject carObject;         // The car
+   public Button interactButton;        // For key and car
+   public Button drinkButton;           // For beer
 
-    private bool hasItem = false;
-    private float interactionDistance = 1.5f; // meters
-    private Transform cameraTransform;
+   public List<GameObject> spawnedBeers = new List<GameObject>(); // dynamically tracked beers
 
-    void Start()
-    {
+   [HideInInspector] public bool hasKey = false;
+   private float interactionDistance = 1.5f;
+   private Transform cameraTransform;
+   private GameObject nearbyBeer;
+
+   void Start()
+   {
       cameraTransform = Camera.main.transform;
 
-      pickUpButton.gameObject.SetActive(false);
-      enterCarButton.gameObject.SetActive(false);
-      
-      pickUpButton.onClick.AddListener(PickUpItem);
-      enterCarButton.onClick.AddListener(enterCar);
-    }
+      interactButton.gameObject.SetActive(false);
+      drinkButton.gameObject.SetActive(false);
 
-    void Update()
-    {
-        float distToPickup = Vector3.Distance(cameraTransform.position, pickupObject.transform.position);
-        float distToCar = Vector3.Distance(cameraTransform.position, carObject.transform.position);
+      interactButton.onClick.AddListener(HandleInteraction);
+      drinkButton.onClick.AddListener(DrinkBeer);
+   }
 
-        if (!hasItem && distToPickup <= interactionDistance)
-        {
-            pickUpButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            pickUpButton.gameObject.SetActive(false);
-        }
+   void Update()
+   {
+      drinkButton.gameObject.SetActive(false);
+      interactButton.gameObject.SetActive(false);
 
-        if (hasItem && distToCar <= interactionDistance)
-        {
-            enterCarButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            enterCarButton.gameObject.SetActive(false);
-        }
-    }
+      // === Check for beer nearby ===
+      nearbyBeer = null;
+      foreach (GameObject beer in spawnedBeers)
+      {
+         if (beer != null && beer.activeSelf &&
+             Vector3.Distance(cameraTransform.position, beer.transform.position) <= interactionDistance)
+         {
+            drinkButton.gameObject.SetActive(true);
+            nearbyBeer = beer;
+            break;
+         }
+      }
 
-    void PickUpItem()
-    {
-        hasItem = true;
-        pickupObject.SetActive(false); // "Pick up" by hiding the object
-        pickUpButton.gameObject.SetActive(false);
-    }
+      // === Check for key ===
+      if (!hasKey && pickupObject != null &&
+          Vector3.Distance(cameraTransform.position, pickupObject.transform.position) <= interactionDistance)
+      {
+         //interactButton.GetComponentInChildren<Text>().text = "Pick Up Key";
+         interactButton.gameObject.SetActive(true);
+      }
+      // === Check for car ===
+      else if (hasKey && carObject != null &&
+               Vector3.Distance(cameraTransform.position, carObject.transform.position) <= interactionDistance)
+      {
+         //interactButton.GetComponentInChildren<Text>().text = "Enter Car";
+         interactButton.gameObject.SetActive(true);
+      }
+   }
 
-    void enterCar()
-    {
-        hasItem = false;
-        // You could trigger an animation, sound, or spawn the object inside the car
-        Debug.Log("Item delivered!");
-        enterCarButton.gameObject.SetActive(false);
-    }
+   public void RegisterBeer(GameObject beer)
+   {
+      spawnedBeers.Add(beer);
+   }
+
+   void HandleInteraction()
+   {
+      if (!hasKey)
+      {
+         hasKey = true;
+         pickupObject.SetActive(false);
+         Debug.Log("Got the key!");
+         interactButton.gameObject.SetActive(false);
+      }
+      else
+      {
+         Debug.Log("Entered the car with the key!");
+         interactButton.gameObject.SetActive(false);
+      }
+   }
+
+   void DrinkBeer()
+   {
+      if (nearbyBeer != null)
+      {
+         nearbyBeer.SetActive(false);
+         drinkButton.gameObject.SetActive(false);
+         Debug.Log("Beer drunk!");
+      }
+   }
 }
