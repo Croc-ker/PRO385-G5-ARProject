@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class ARPickupInteraction : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class ARPickupInteraction : MonoBehaviour
    public Button interactButton;        // For key and car
    public Button drinkButton;           // For beer
 
+   public TMP_Text beerCount;
+   public TMP_Text goal;
+
    public List<GameObject> spawnedBeers = new List<GameObject>(); // dynamically tracked beers
+   public int collectedBeers = 0;
 
    [HideInInspector] public bool hasKey = false;
    private float interactionDistance = 1.5f;
@@ -25,6 +30,8 @@ public class ARPickupInteraction : MonoBehaviour
 
       interactButton.onClick.AddListener(HandleInteraction);
       drinkButton.onClick.AddListener(DrinkBeer);
+
+      goal.text = "Go find yourself some beer!";
    }
 
    void Update()
@@ -78,6 +85,7 @@ public class ARPickupInteraction : MonoBehaviour
       else
       {
          Debug.Log("Entered the car with the key!");
+         goal.text = "That bump is shaped like a deer, D.U.I LOL how bout you die!";
          interactButton.gameObject.SetActive(false);
       }
    }
@@ -86,9 +94,29 @@ public class ARPickupInteraction : MonoBehaviour
    {
       if (nearbyBeer != null)
       {
+         collectedBeers++;
+         beerCount.text = "x" + collectedBeers;
          nearbyBeer.SetActive(false);
          drinkButton.gameObject.SetActive(false);
          Debug.Log("Beer drunk!");
       }
+   }
+
+   public void restart()
+   {
+      collectedBeers = 0;
+      beerCount.text = "x" + collectedBeers;
+      goal.text = "Go find yourself some beer!";
+      interactButton.gameObject.SetActive(false);
+      drinkButton.gameObject.SetActive(false);
+      if (pickupObject) Destroy(pickupObject);
+      if (carObject) Destroy(carObject);
+      hasKey = false;
+
+      foreach (var obj in spawnedBeers)
+      {
+         Destroy(obj);
+      }
+      spawnedBeers.Clear();
    }
 }

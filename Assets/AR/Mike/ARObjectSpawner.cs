@@ -18,7 +18,7 @@ public class ARObjectSpawner : MonoBehaviour
    private bool keySpawned = false;
    private bool truckSpawned = false;
 
-   public int beersCollected = 0;
+   private List<GameObject> spawnedObjects = new List<GameObject>();
 
    void Update()
    {
@@ -27,13 +27,15 @@ public class ARObjectSpawner : MonoBehaviour
          StartCoroutine(SpawnTimer("beer"));
          beerSpawned = true;
       }
-      else if(beerSpawned & !keySpawned & beersCollected >= 5)
+      else if(beerSpawned & !keySpawned & interactionScript.collectedBeers >= 5)
       {
+         interactionScript.goal.text = "You need to experience a DUI, go find your truck keys!";
          StartCoroutine(SpawnTimer("key"));
          keySpawned = true;
       }
       else if(!truckSpawned & interactionScript.hasKey)
       {
+         interactionScript.goal.text = "You have your keys, now go find you truck!";
          StartCoroutine(SpawnTimer("truck"));
          truckSpawned = true;
       }
@@ -69,18 +71,20 @@ public class ARObjectSpawner : MonoBehaviour
          // Spawn key
          var obj = Instantiate(keyPrefab, GetRandomLocation(plane), Quaternion.identity);
          interactionScript.pickupObject = obj;
+         spawnedObjects.Add(obj);
       }
       else
       {
          // Spawn truck
          var obj = Instantiate(truckPrefab, GetRandomLocation(plane), Quaternion.identity);
          interactionScript.carObject = obj;
+         spawnedObjects.Add(obj);
       }
    }
 
    IEnumerator SpawnTimer(string type)
    {
-      yield return new WaitForSeconds(6);
+      yield return new WaitForSeconds(8);
       switch (type)
       {
          case "beer":
@@ -107,5 +111,18 @@ public class ARObjectSpawner : MonoBehaviour
       Vector3 worldPoint = plane.transform.TransformPoint(localPoint);
 
       return worldPoint + plane.transform.up * heightOffset;
+   }
+
+   public void restart()
+   {
+      beerSpawned = false;
+      keySpawned = false;
+      truckSpawned = false;
+
+      foreach(var obj in spawnedObjects)
+      {
+         Destroy(obj);
+      }
+      spawnedObjects.Clear();
    }
 }
