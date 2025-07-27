@@ -2,7 +2,8 @@ using UnityEngine;
 
 public enum SoundType
 {
-    ASGORE_PASSIVE
+    ASGORE_PASSIVE,
+    ASGORE_DRUNK
 }
 
 [RequireComponent(typeof(AudioSource))]

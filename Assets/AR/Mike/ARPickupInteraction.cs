@@ -84,8 +84,10 @@ public class ARPickupInteraction : MonoBehaviour
       }
       else
       {
+         SoundManager.StopLoopingSound();
          Debug.Log("Entered the car with the key!");
          goal.text = "That bump is shaped like a deer, D.U.I LOL how bout you die!";
+         SoundManager.PlayLoopingSound(SoundType.ASGORE_DRUNK, 0.75f);
          interactButton.gameObject.SetActive(false);
       }
    }
