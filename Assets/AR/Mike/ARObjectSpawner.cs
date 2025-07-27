@@ -51,7 +51,7 @@ public class ARObjectSpawner : MonoBehaviour
       {
          var randomPlane = planes[Random.Range(0, planes.Count)];
          Vector3 spawnPos = GetRandomLocation(randomPlane);
-         var obj = Instantiate(beerPrefab, spawnPos, Quaternion.identity);
+         var obj = Instantiate(beerPrefab, spawnPos, Quaternion.Euler(180f, 0f, 0f));
          interactionScript.spawnedBeers.Add(obj);
       }
    }

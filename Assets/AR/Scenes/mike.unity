@@ -2658,11 +2658,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c8182a63e737c46b21ff1a65949b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ARObjectSpawner
-  beerPrefab: {fileID: 4109703688760574301, guid: fe0c1072d264c6e47a39d1d66045513f,
+  beerPrefab: {fileID: 6974440442117809795, guid: b5016c8b374545e4aab95d286ffbd19d,
     type: 3}
-  keyPrefab: {fileID: 6481611125919817763, guid: a7aaddd46991d2940b5783230e859adb,
+  keyPrefab: {fileID: 323158741376829598, guid: f35df994bfbd78d45887493e2d4d9532,
     type: 3}
-  truckPrefab: {fileID: 8645538847777891380, guid: 0e36b3036c0aca24cb34588b0a106993,
+  truckPrefab: {fileID: 5831677493494216030, guid: 0a950be2634047a4780243183ede0f81,
     type: 3}
   interactionScript: {fileID: 151853171}
   planeManager: {fileID: 151853166}
