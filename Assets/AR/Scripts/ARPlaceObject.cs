@@ -52,9 +52,9 @@ public class PlaceObjects : MonoBehaviour
         if (rayHits.Count > 0)
         {
             // Get the position and rotation of the first hit
-            Vector3 hitPosePosition = rayHits[0].pose.position;
-            Quaternion hitPoseRotation = rayHits[0].pose.rotation;
-            hitPoseRotation = Quaternion.Euler(hitPosePosition.x, Quaternion.LookRotation(hitPosePosition - playerTransform.position).y, hitPoseRotation.z + 90);
+            Vector3 hitPosePosition = rayHits[0].pose.position + new Vector3(0, 0.1f, 0);
+            // Quaternion hitPoseRotation = rayHits[0].pose.rotation;
+            Quaternion hitPoseRotation = Quaternion.Euler(0, Quaternion.LookRotation(hitPosePosition-playerTransform.position).eulerAngles.y-90, 0);
             // Instantiate the prefab at the hit location
             Instantiate(prefabs[Random.Range(0,prefabs.Length)], hitPosePosition, hitPoseRotation);
         }
