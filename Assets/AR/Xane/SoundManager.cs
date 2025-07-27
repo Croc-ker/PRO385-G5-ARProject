@@ -1,9 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public enum SoundType
 {
     ASGORE_PASSIVE,
-    ASGORE_DRUNK
+    ASGORE_DRUNK,
+    DRINK,
+    PICKUP,
+    HIT,
+    CAR
 }
 
 [RequireComponent(typeof(AudioSource))]
@@ -44,4 +49,10 @@ public class SoundManager : MonoBehaviour
         instance.audioSource.loop = false;
         instance.audioSource.clip = null;
     }
+
+   public static IEnumerator playAfterDelay(SoundType sound, float volume = 1f, float delay = 0)
+   {
+      yield return new WaitForSeconds(delay);
+      PlayLoopingSound(sound, volume);
+   }
 }

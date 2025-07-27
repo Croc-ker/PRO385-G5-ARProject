@@ -21,6 +21,7 @@ public class ARPickupInteraction : MonoBehaviour
    public List<GameObject> spawnedBeers = new List<GameObject>(); // dynamically tracked beers
    public int collectedBeers = 1;
 
+   [HideInInspector] public bool driving = false;
    [HideInInspector] public bool hasKey = false;
    [HideInInspector] public bool drinking = true;
    private float interactionDistance = 1.5f;
@@ -82,36 +83,31 @@ public class ARPickupInteraction : MonoBehaviour
       {
          if(nearbyBeer != null)
          {
+            SoundManager.PlaySound(SoundType.PICKUP, 0.75f);
             collectedBeers++;
             beerCount.text = "x" + collectedBeers;
             nearbyBeer.SetActive(false);
-            Debug.Log("Got Beer!");
-            //play pickup beer sound
             if (collectedBeers == spawnedBeers.Count + 1) drinking = false;
          }
       }
       else if (!hasKey)
       {
+         SoundManager.PlaySound(SoundType.PICKUP, 0.75f);
          hasKey = true;
          pickupObject.SetActive(false);
-         Debug.Log("Got the key!");
          interactButton.gameObject.SetActive(false);
-         //play key sound
       }
       else
       {
+         driving = true;
          SoundManager.StopLoopingSound();
-         Debug.Log("Entered the car with the key!");
+         SoundManager.PlaySound(SoundType.CAR, 0.75f);
          HUD.gameObject.SetActive(true);
-         goal.text = "That bump is shaped like a deer, D.U.I LOL how bout you die!";
-         SoundManager.PlayLoopingSound(SoundType.ASGORE_DRUNK, 0.75f);
+         goal.text = "That bump is shaped like a deer, D.U.I how bout you die!";
+         StartCoroutine(SoundManager.playAfterDelay(SoundType.ASGORE_DRUNK, 0.50f, 2));
          carObject.SetActive(false);
          spawnDess.enabled = true;
          interactButton.gameObject.SetActive(false);
-         drinkButton.gameObject.SetActive(false);
-         holdBeer.gameObject.SetActive(false);
-         drinkBeer.gameObject.SetActive(false);
-         //play enter car sound
       }
    }
 
@@ -124,7 +120,7 @@ public class ARPickupInteraction : MonoBehaviour
    {
       holdBeer.gameObject.SetActive(false);
       drinkBeer.gameObject.SetActive(true);
-      //play drinking sound
+      SoundManager.PlaySound(SoundType.DRINK, 0.75f);
       yield return new WaitForSeconds(1);
       drinkBeer.gameObject.SetActive(false);
       holdBeer.gameObject.SetActive(true);
@@ -145,6 +141,7 @@ public class ARPickupInteraction : MonoBehaviour
       spawnDess.enabled = false;
       hasKey = false;
       drinking = true;
+      driving = false;
 
       foreach (var obj in spawnedBeers)
       {

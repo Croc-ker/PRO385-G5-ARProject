@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -28,9 +29,12 @@ public class PlaceObjects : MonoBehaviour
         Touchscreen.current.touches.Count > 0 &&
         Touchscreen.current.touches[0].phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Began && !isPlacing)
         {
-            isPlacing = true;
             // Get touch position on screen
             Vector2 touchPos = Touchscreen.current.touches[0].position.ReadValue();
+
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(Touchscreen.current.touches[0].touchId.ReadValue())) return;
+
+            isPlacing = true;
             // Place the object at touch position
             PlaceObject(touchPos);
         }
@@ -38,9 +42,12 @@ public class PlaceObjects : MonoBehaviour
         else if (Mouse.current != null &&
         Mouse.current.leftButton.wasPressedThisFrame && !isPlacing)
         {
-            isPlacing = true;
             // Get mouse position on screen
             Vector2 mousePos = Mouse.current.position.ReadValue();
+
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+            isPlacing = true;
             // Place the object at mouse click
             PlaceObject(mousePos);
         }

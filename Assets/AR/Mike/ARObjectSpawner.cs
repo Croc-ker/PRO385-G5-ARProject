@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
-//using System.Linq;
 using System.Collections;
 
 public class ARObjectSpawner : MonoBehaviour
@@ -12,13 +11,17 @@ public class ARObjectSpawner : MonoBehaviour
    public ARPickupInteraction interactionScript;
 
    public ARPlaneManager planeManager;
-   public float heightOffset = 0.05f; // Slightly above the plane
+   public float heightOffset = 0.1f; // Slightly above the plane
 
    private bool beerSpawned = false;
    private bool keySpawned = false;
    private bool truckSpawned = false;
 
-   private List<GameObject> spawnedObjects = new List<GameObject>();
+   private float keyTimer = 0;
+   private float truckTimer = 0;
+
+   private GameObject keyObj;
+   private GameObject truckObj;
 
    void Update()
    {
@@ -33,11 +36,32 @@ public class ARObjectSpawner : MonoBehaviour
          StartCoroutine(SpawnTimer("key"));
          keySpawned = true;
       }
-      else if(!truckSpawned & interactionScript.hasKey)
+      else if(!truckSpawned && interactionScript.hasKey)
       {
          interactionScript.goal.text = "You have your keys, now go find you truck!";
          StartCoroutine(SpawnTimer("truck"));
          truckSpawned = true;
+      }
+
+      if (keySpawned && !interactionScript.hasKey)
+      {
+         keyTimer += Time.deltaTime;
+         if (keyTimer >= 30)
+         {
+            Destroy(keyObj);
+            StartCoroutine(SpawnTimer("key"));
+            keyTimer = 0;
+         }
+      }
+      else if (truckSpawned && !interactionScript.driving)
+      {
+         truckTimer += Time.deltaTime;
+         if (truckTimer >= 30)
+         {
+            Destroy(truckObj);
+            StartCoroutine(SpawnTimer("truck"));
+            truckTimer = 0;
+         }
       }
    }
 
@@ -69,16 +93,14 @@ public class ARObjectSpawner : MonoBehaviour
       if (key)
       {
          // Spawn key
-         var obj = Instantiate(keyPrefab, GetRandomLocation(plane), Quaternion.identity);
-         interactionScript.pickupObject = obj;
-         spawnedObjects.Add(obj);
+         keyObj = Instantiate(keyPrefab, GetRandomLocation(plane), Quaternion.identity);
+         interactionScript.pickupObject = keyObj;
       }
       else
       {
          // Spawn truck
-         var obj = Instantiate(truckPrefab, GetRandomLocation(plane), Quaternion.identity);
-         interactionScript.carObject = obj;
-         spawnedObjects.Add(obj);
+         truckObj = Instantiate(truckPrefab, GetRandomLocation(plane), Quaternion.identity);
+         interactionScript.carObject = truckObj;
       }
    }
 
@@ -119,10 +141,10 @@ public class ARObjectSpawner : MonoBehaviour
       keySpawned = false;
       truckSpawned = false;
 
-      foreach(var obj in spawnedObjects)
-      {
-         Destroy(obj);
-      }
-      spawnedObjects.Clear();
+      Destroy(keyObj);
+      Destroy(truckObj);
+
+      keyTimer = 0;
+      truckTimer = 0;
    }
 }
