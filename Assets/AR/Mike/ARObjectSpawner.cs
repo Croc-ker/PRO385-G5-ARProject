@@ -27,7 +27,7 @@ public class ARObjectSpawner : MonoBehaviour
          StartCoroutine(SpawnTimer("beer"));
          beerSpawned = true;
       }
-      else if(beerSpawned & !keySpawned & interactionScript.collectedBeers >= 5)
+      else if(beerSpawned && !keySpawned && !interactionScript.drinking)
       {
          interactionScript.goal.text = "You need to experience a DUI, go find your truck keys!";
          StartCoroutine(SpawnTimer("key"));
@@ -45,7 +45,7 @@ public class ARObjectSpawner : MonoBehaviour
    {
       List<ARPlane> planes = new List<ARPlane>();
       foreach (var item in planeManager.trackables) planes.Add(item);
-      int beerCount = Random.Range(5, 10);
+      int beerCount = Random.Range(4, 7);
 
       for (int i = 0; i < beerCount; i++)
       {

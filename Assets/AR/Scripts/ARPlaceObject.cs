@@ -11,7 +11,10 @@ public class PlaceObjects : MonoBehaviour
     [SerializeField] private GameObject[] prefabs;
     [SerializeField] private Transform playerTransform;
     bool isPlacing = false;
-    void Start()
+
+   private List<GameObject> spawnedObjects = new List<GameObject>();
+
+   void Start()
     {
         // Get the ARRaycastManager component if it's not already assigned
         raycastManager ??= GetComponent<ARRaycastManager>();
@@ -56,7 +59,8 @@ public class PlaceObjects : MonoBehaviour
             // Quaternion hitPoseRotation = rayHits[0].pose.rotation;
             Quaternion hitPoseRotation = Quaternion.Euler(0, Quaternion.LookRotation(hitPosePosition-playerTransform.position).eulerAngles.y-90, 0);
             // Instantiate the prefab at the hit location
-            Instantiate(prefabs[Random.Range(0,prefabs.Length)], hitPosePosition, hitPoseRotation);
+            var obj = Instantiate(prefabs[Random.Range(0,prefabs.Length)], hitPosePosition, hitPoseRotation);
+            spawnedObjects.Add(obj);
         }
         // Wait briefly before allowing another placement
         StartCoroutine(SetPlacingToFalseWithDelay());
@@ -68,4 +72,10 @@ public class PlaceObjects : MonoBehaviour
         // Allow placing again
         isPlacing = false;
     }
+
+   public void Restart()
+   {
+      foreach (var item in spawnedObjects) Destroy(item);
+      spawnedObjects.Clear();
+   }
 }
