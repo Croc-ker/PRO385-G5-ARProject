@@ -36,6 +36,7 @@ public class Pulverize : MonoBehaviour
 
             //rotate them too
             rb.AddTorque(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * force, ForceMode.Impulse);
+            SoundManager.PlaySound(SoundType.HIT, 0.75f);
         }
     }
 }

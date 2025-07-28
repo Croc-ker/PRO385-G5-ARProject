@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -11,7 +12,10 @@ public class PlaceObjects : MonoBehaviour
     [SerializeField] private GameObject[] prefabs;
     [SerializeField] private Transform playerTransform;
     bool isPlacing = false;
-    void Start()
+
+   private List<GameObject> spawnedObjects = new List<GameObject>();
+
+   void Start()
     {
         // Get the ARRaycastManager component if it's not already assigned
         raycastManager ??= GetComponent<ARRaycastManager>();
@@ -25,9 +29,12 @@ public class PlaceObjects : MonoBehaviour
         Touchscreen.current.touches.Count > 0 &&
         Touchscreen.current.touches[0].phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Began && !isPlacing)
         {
-            isPlacing = true;
             // Get touch position on screen
             Vector2 touchPos = Touchscreen.current.touches[0].position.ReadValue();
+
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(Touchscreen.current.touches[0].touchId.ReadValue())) return;
+
+            isPlacing = true;
             // Place the object at touch position
             PlaceObject(touchPos);
         }
@@ -35,9 +42,12 @@ public class PlaceObjects : MonoBehaviour
         else if (Mouse.current != null &&
         Mouse.current.leftButton.wasPressedThisFrame && !isPlacing)
         {
-            isPlacing = true;
             // Get mouse position on screen
             Vector2 mousePos = Mouse.current.position.ReadValue();
+
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+            isPlacing = true;
             // Place the object at mouse click
             PlaceObject(mousePos);
         }
@@ -56,7 +66,8 @@ public class PlaceObjects : MonoBehaviour
             // Quaternion hitPoseRotation = rayHits[0].pose.rotation;
             Quaternion hitPoseRotation = Quaternion.Euler(0, Quaternion.LookRotation(hitPosePosition-playerTransform.position).eulerAngles.y-90, 0);
             // Instantiate the prefab at the hit location
-            Instantiate(prefabs[Random.Range(0,prefabs.Length)], hitPosePosition, hitPoseRotation);
+            var obj = Instantiate(prefabs[Random.Range(0,prefabs.Length)], hitPosePosition, hitPoseRotation);
+            spawnedObjects.Add(obj);
         }
         // Wait briefly before allowing another placement
         StartCoroutine(SetPlacingToFalseWithDelay());
@@ -68,4 +79,10 @@ public class PlaceObjects : MonoBehaviour
         // Allow placing again
         isPlacing = false;
     }
+
+   public void Restart()
+   {
+      foreach (var item in spawnedObjects) Destroy(item);
+      spawnedObjects.Clear();
+   }
 }
