@@ -36,7 +36,7 @@
 
 ---
 
-## 🚀 How to Run the Project
+## How to Run the Project
 
 ### Prerequisites:
 
@@ -55,7 +55,7 @@
 
 ---
 
-## 📸 Screenshots / GIFs
+## Screenshots / GIFs
 
 *(Add real media from the app here)*
 
