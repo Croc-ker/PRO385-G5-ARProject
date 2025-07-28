@@ -17,6 +17,7 @@ public class ARObjectSpawner : MonoBehaviour
    private bool keySpawned = false;
    private bool truckSpawned = false;
 
+   private float beerTimer = 0;
    private float keyTimer = 0;
    private float truckTimer = 0;
 
@@ -27,8 +28,12 @@ public class ARObjectSpawner : MonoBehaviour
    {
       if (!beerSpawned && planeManager.trackables.count >= 2)
       {
-         StartCoroutine(SpawnTimer("beer"));
-         beerSpawned = true;
+         if(interactionScript.collectedBeers == interactionScript.spawnedBeers.Count+1)
+         {
+            if (interactionScript.collectedBeers == 7) beerSpawned = true;
+            else SpawnBeers();//StartCoroutine(SpawnTimer("beer"));
+         }
+         
       }
       else if(beerSpawned && !keySpawned && !interactionScript.drinking)
       {
@@ -43,7 +48,20 @@ public class ARObjectSpawner : MonoBehaviour
          truckSpawned = true;
       }
 
-      if (keySpawned && !interactionScript.hasKey)
+      if (!beerSpawned && interactionScript.drinking)
+      {
+         beerTimer += Time.deltaTime;
+         if(beerTimer >= 30)
+         {
+            int index = interactionScript.spawnedBeers.Count-1;
+            var obj = interactionScript.spawnedBeers[index];
+            obj.SetActive(false);
+            interactionScript.spawnedBeers.RemoveAt(index);
+            Destroy(obj);
+            beerTimer = 0;
+         }
+      }
+      else if (keySpawned && !interactionScript.hasKey)
       {
          keyTimer += Time.deltaTime;
          if (keyTimer >= 30)
@@ -69,15 +87,21 @@ public class ARObjectSpawner : MonoBehaviour
    {
       List<ARPlane> planes = new List<ARPlane>();
       foreach (var item in planeManager.trackables) planes.Add(item);
-      int beerCount = Random.Range(4, 7);
+      //int beerCount = Random.Range(4, 7);
 
-      for (int i = 0; i < beerCount; i++)
-      {
-         var randomPlane = planes[Random.Range(0, planes.Count)];
-         Vector3 spawnPos = GetRandomLocation(randomPlane);
-         var obj = Instantiate(beerPrefab, spawnPos, Quaternion.Euler(180f, 0f, 0f));
-         interactionScript.spawnedBeers.Add(obj);
-      }
+      //for (int i = 0; i < beerCount; i++)
+      //{
+      //   var randomPlane = planes[Random.Range(0, planes.Count)];
+      //   Vector3 spawnPos = GetRandomLocation(randomPlane);
+      //   var obj = Instantiate(beerPrefab, spawnPos, Quaternion.Euler(180f, 0f, 0f));
+      //   interactionScript.spawnedBeers.Add(obj);
+      //}
+      var randomPlane = planes[Random.Range(0, planes.Count)];
+      Vector3 spawnPos = GetRandomLocation(randomPlane);
+      var obj = Instantiate(beerPrefab, spawnPos, Quaternion.Euler(180f, 0f, 0f));
+      interactionScript.spawnedBeers.Add(obj);
+      beerTimer = 0;
+      StartCoroutine(BeerTimer(obj));
    }
 
    public void SpawnObjects(bool key)
@@ -110,7 +134,7 @@ public class ARObjectSpawner : MonoBehaviour
       switch (type)
       {
          case "beer":
-            SpawnBeers();
+            SpawnBeers();  // Old Beer code no longer in use
             break;
          case "key":
             SpawnObjects(true);
@@ -119,6 +143,13 @@ public class ARObjectSpawner : MonoBehaviour
             SpawnObjects(false);
             break;
       }
+   }
+
+   IEnumerator BeerTimer(GameObject obj)
+   {
+      obj.SetActive(false);
+      yield return new WaitForSeconds(1);
+      obj.SetActive(true);
    }
 
    Vector3 GetRandomLocation(ARPlane plane)
@@ -137,6 +168,7 @@ public class ARObjectSpawner : MonoBehaviour
 
    public void restart()
    {
+      StopAllCoroutines();
       beerSpawned = false;
       keySpawned = false;
       truckSpawned = false;
@@ -146,5 +178,6 @@ public class ARObjectSpawner : MonoBehaviour
 
       keyTimer = 0;
       truckTimer = 0;
+      beerTimer = 0;
    }
 }
