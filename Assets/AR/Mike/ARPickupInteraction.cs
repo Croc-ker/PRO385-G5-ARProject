@@ -51,8 +51,7 @@ public class ARPickupInteraction : MonoBehaviour
       nearbyBeer = null;
       foreach (GameObject beer in spawnedBeers)
       {
-         if (beer != null && beer.activeSelf &&
-             Vector3.Distance(cameraTransform.position, beer.transform.position) <= interactionDistance)
+         if (beer != null && beer.activeSelf && Vector3.Distance(cameraTransform.position, beer.transform.position) <= interactionDistance)
          {
             interactButton.gameObject.SetActive(true);
             nearbyBeer = beer;
@@ -66,7 +65,7 @@ public class ARPickupInteraction : MonoBehaviour
          interactButton.gameObject.SetActive(true);
       }
       // === Check for car ===
-      else if (hasKey && carObject != null && Vector3.Distance(cameraTransform.position, carObject.transform.position) <= interactionDistance)
+      else if (!driving && carObject != null && Vector3.Distance(cameraTransform.position, carObject.transform.position) <= interactionDistance)
       {
          interactButton.gameObject.SetActive(true);
       }
@@ -87,7 +86,7 @@ public class ARPickupInteraction : MonoBehaviour
             collectedBeers++;
             beerCount.text = "x" + collectedBeers;
             nearbyBeer.SetActive(false);
-            if (collectedBeers == spawnedBeers.Count + 1) drinking = false;
+            if (collectedBeers == 7) drinking = false;
          }
       }
       else if (!hasKey)
@@ -128,6 +127,7 @@ public class ARPickupInteraction : MonoBehaviour
 
    public void restart()
    {
+      StopAllCoroutines();
       collectedBeers = 1;
       beerCount.text = "x" + collectedBeers;
       goal.text = "Go find yourself some beer!";
