@@ -3896,7 +3896,7 @@ MonoBehaviour:
   spawner: {fileID: 573582070}
   interactor: {fileID: 151853171}
   placer: {fileID: 331264288}
-  planeManager: {fileID: 151853166}
+  ARSession: {fileID: 702413258}
   options: {fileID: 1520419814}
 --- !u!1 &846715049
 GameObject:

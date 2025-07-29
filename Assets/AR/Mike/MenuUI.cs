@@ -11,7 +11,7 @@ public class MenuUI : MonoBehaviour
    public ARObjectSpawner spawner;
    public ARPickupInteraction interactor;
    public PlaceObjects placer;
-   public ARPlaneManager planeManager;
+   public ARSession ARSession;
 
    public Toggle options;
 
@@ -23,32 +23,7 @@ public class MenuUI : MonoBehaviour
       interactor.restart();
       placer.Restart();
       options.isOn = false;
-      //StartCoroutine(DestroyPlanesAfterFrame());
-
-
-      //foreach (var plane in planeManager.trackables)
-      //{
-      //   plane.gameObject.SetActive(false);
-      //}
-
-      //planeManager.enabled = false;
-      //planeManager.enabled = true;
-   }
-
-   private IEnumerator DestroyPlanesAfterFrame()
-   {
-      yield return new WaitForEndOfFrame();
-
-      foreach (var plane in planeManager.trackables)
-      {
-         Destroy(plane.gameObject);
-      }
-
-      planeManager.enabled = false;
-      planeManager.enabled = true;
-
-
-      options.isOn = false;
+      ARSession.Reset();
    }
 
    public void ExitGame()
