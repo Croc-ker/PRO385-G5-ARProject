@@ -26,17 +26,23 @@ public class Pulverize : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+
         if (rb != null)
         {
-            //rb.AddForce((other.transform.position - origin.transform.position).normalized * force, ForceMode.Impulse);
-            // same as above but scales the force by the current velocity of the device
+            other.gameObject.GetComponent<Collider>().enabled = false;
             Vector3 forceDirection = (other.transform.position - origin.transform.position).normalized;
             float scaledForce = force * currentVelocity.magnitude;
-            rb.AddForce(forceDirection * 1.5f * (scaledForce*0.75f), ForceMode.Impulse);
-
-            //rotate them too
+            rb.AddForce(forceDirection * 2f * scaledForce, ForceMode.Impulse);
             rb.AddTorque(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * force, ForceMode.Impulse);
-            SoundManager.PlaySound(SoundType.HIT, 0.75f);
+            if(Random.Range(0,2) == 0)
+            {
+                SoundManager.PlaySound(SoundType.HIT, 2f);
+            }
+            else
+            {
+                SoundManager.PlaySound(SoundType.HIT2, 2f);
+            }
+            
         }
     }
 }

@@ -19,7 +19,7 @@ public class MenuUI : MonoBehaviour
    public void RetartGame()
    {
       SoundManager.StopLoopingSound();
-      SoundManager.PlayLoopingSound(SoundType.ASGORE_PASSIVE, 0.75f);
+      SoundManager.PlayLoopingSound(SoundType.ASGORE_PASSIVE, 0.05f);
       spawner.restart();
       interactor.restart();
       placer.Restart();

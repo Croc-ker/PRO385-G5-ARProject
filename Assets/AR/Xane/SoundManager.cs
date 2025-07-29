@@ -8,6 +8,7 @@ public enum SoundType
     DRINK,
     PICKUP,
     HIT,
+    HIT2,
     CAR
 }
 
@@ -28,13 +29,13 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public static void PlaySound(SoundType sound, float volume = 1f)
+    public static void PlaySound(SoundType sound, float volume)
     {
         instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
     }
 
     // Plays a sound in a loop until stopped
-    public static void PlayLoopingSound(SoundType sound, float volume = 1f)
+    public static void PlayLoopingSound(SoundType sound, float volume)
     {
         instance.audioSource.clip = instance.soundList[(int)sound];
         instance.audioSource.volume = volume;
@@ -50,7 +51,7 @@ public class SoundManager : MonoBehaviour
         instance.audioSource.clip = null;
     }
 
-   public static IEnumerator playAfterDelay(SoundType sound, float volume = 1f, float delay = 0)
+   public static IEnumerator playAfterDelay(SoundType sound, float volume, float delay = 0)
    {
       yield return new WaitForSeconds(delay);
       PlayLoopingSound(sound, volume);

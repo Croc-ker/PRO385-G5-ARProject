@@ -105,7 +105,7 @@ public class ARPickupInteraction : MonoBehaviour
          SoundManager.PlaySound(SoundType.CAR, 0.75f);
          HUD.gameObject.SetActive(true);
          goal.text = "That bump is shaped like a deer, D.U.I how bout you die!";
-         StartCoroutine(SoundManager.playAfterDelay(SoundType.ASGORE_DRUNK, 0.50f, 2));
+         StartCoroutine(SoundManager.playAfterDelay(SoundType.ASGORE_DRUNK, 0.20f, 2));
          carObject.SetActive(false);
          spawnDess.enabled = true;
          interactButton.gameObject.SetActive(false);
@@ -121,7 +121,7 @@ public class ARPickupInteraction : MonoBehaviour
    {
       holdBeer.gameObject.SetActive(false);
       drinkBeer.gameObject.SetActive(true);
-      SoundManager.PlaySound(SoundType.DRINK, 0.75f);
+      SoundManager.PlaySound(SoundType.DRINK, 10f);
       yield return new WaitForSeconds(1);
       drinkBeer.gameObject.SetActive(false);
       holdBeer.gameObject.SetActive(true);
