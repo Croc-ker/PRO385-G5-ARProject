@@ -1,5 +1,7 @@
 # Asgore Simulator AR
 
+![driving-in-my-car-right-after-a-beer-asgore](https://github.com/user-attachments/assets/988d815a-f8c6-45b6-9eab-da395762a744)
+
 ## Team Members/Collaborators
 
 * Michael Perez
@@ -55,7 +57,23 @@
 
 ---
 
-## Screenshots / GIFs
+## Screenshots
 
-*(Add real media from the app here)*
-
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/1e33204d-8fef-4719-acd3-f2c8bd959ffd" width="300"/></td>
+    <td><img src="https://github.com/user-attachments/assets/4ec7f8f4-be46-42e7-beaf-8489977671bb" width="300"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/a86276ec-7aba-41c9-8230-8f3de7a58ae1" width="300"/></td>
+    <td><img src="https://github.com/user-attachments/assets/6cda4766-accb-43c5-9380-ef97c204eb1f" width="300"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/6168d650-bde4-4a3d-92e2-6ff7559e45b6" width="300"/></td>
+    <td><img src="https://github.com/user-attachments/assets/7cf42798-6d89-443e-9bbd-a1916f930fde" width="300"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/cef486d6-a09f-46c1-89b8-091cf671987c" width="300"/></td>
+    <td><img src="https://github.com/user-attachments/assets/7d8fa65e-745c-4ec3-9e1c-34f1648b43af" width="300"/></td>
+  </tr>
+</table>
