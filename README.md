@@ -6,7 +6,7 @@
 
 * Michael Perez
 * Wyatt Crocker
-* Xane Ossman
+* Xane Ossa Ammerman
 
 ---
 
