@@ -32,9 +32,9 @@ public class PlaceObjects : MonoBehaviour
             // Get touch position on screen
             Vector2 touchPos = Touchscreen.current.touches[0].position.ReadValue();
 
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(Touchscreen.current.touches[0].touchId.ReadValue())) return;
+            if (IsTouchOverUIObject(touchPos))  return;
 
-            isPlacing = true;
+         isPlacing = true;
             // Place the object at touch position
             PlaceObject(touchPos);
         }
@@ -79,6 +79,17 @@ public class PlaceObjects : MonoBehaviour
         // Allow placing again
         isPlacing = false;
     }
+
+   private bool IsTouchOverUIObject(Vector2 touchPosition)
+   {
+      PointerEventData eventData = new PointerEventData(EventSystem.current);
+      eventData.position = touchPosition;
+
+      List<RaycastResult> results = new List<RaycastResult>();
+      EventSystem.current.RaycastAll(eventData, results);
+
+      return results.Count > 0;
+   }
 
    public void Restart()
    {
