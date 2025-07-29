@@ -24,13 +24,15 @@ public class ARObjectSpawner : MonoBehaviour
    private GameObject keyObj;
    private GameObject truckObj;
 
+   private int beerLimit = 5;
+
    void Update()
    {
       if (!beerSpawned && planeManager.trackables.count >= 2)
       {
          if(interactionScript.collectedBeers == interactionScript.spawnedBeers.Count+1)
          {
-            if (interactionScript.collectedBeers == 7) beerSpawned = true;
+            if (interactionScript.collectedBeers == beerLimit) beerSpawned = true;
             else SpawnBeers();//StartCoroutine(SpawnTimer("beer"));
          }
          

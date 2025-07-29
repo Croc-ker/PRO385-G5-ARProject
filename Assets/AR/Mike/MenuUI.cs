@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.ARCore;
@@ -23,6 +24,9 @@ public class MenuUI : MonoBehaviour
       interactor.restart();
       placer.Restart();
       options.isOn = false;
+      //var obj = GameObject.Find("DrunkVolume");
+      //obj.GetComponent<Volume>().enabled = false;
+      //Destroy(obj);
       ARSession.Reset();
    }
 

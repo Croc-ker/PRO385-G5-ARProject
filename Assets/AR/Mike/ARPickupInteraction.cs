@@ -24,9 +24,11 @@ public class ARPickupInteraction : MonoBehaviour
    [HideInInspector] public bool driving = false;
    [HideInInspector] public bool hasKey = false;
    [HideInInspector] public bool drinking = true;
-   private float interactionDistance = 1.5f;
+   private float interactionDistance = 2.5f;
    private Transform cameraTransform;
    private GameObject nearbyBeer;
+
+   private int beerLimit = 5;
 
    void Start()
    {
@@ -86,7 +88,7 @@ public class ARPickupInteraction : MonoBehaviour
             collectedBeers++;
             beerCount.text = "x" + collectedBeers;
             nearbyBeer.SetActive(false);
-            if (collectedBeers == 7) drinking = false;
+            if (collectedBeers == beerLimit) drinking = false;
          }
       }
       else if (!hasKey)
