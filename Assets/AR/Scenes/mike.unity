@@ -1978,6 +1978,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 804252113}
+    - targetCorrespondingSourceObject: {fileID: 2512387469002778308, guid: 48cb3fb68c91eb94999fd99957eb0cae,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1350441198}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae,
         type: 3}
@@ -2192,9 +2196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e4e5782f47ac643a6e5e073a66e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Drunk
-  drunkVolume: {fileID: 2423181825091095463, guid: 8872497b7f15cfa46ae326506fa392a1,
-    type: 3}
-  playerTransform: {fileID: 331264289}
+  drunkVolume: {fileID: 1350441196}
 --- !u!1 &375390199
 GameObject:
   m_ObjectHideFlags: 0
@@ -5176,6 +5178,24 @@ MonoBehaviour:
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
+--- !u!114 &1350441196 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2423181825091095463, guid: 8872497b7f15cfa46ae326506fa392a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1582330530}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+--- !u!4 &1350441198 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1582330530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1362734343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6094,6 +6114,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537889602}
   m_CullTransparentMesh: 1
+--- !u!1001 &1582330530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 331264289}
+    m_Modifications:
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224652241741462304, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8361448948031273245, guid: 8872497b7f15cfa46ae326506fa392a1,
+        type: 3}
+      propertyPath: m_Name
+      value: DrunkVolume
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8872497b7f15cfa46ae326506fa392a1, type: 3}
 --- !u!1 &1785409643
 GameObject:
   m_ObjectHideFlags: 0
